@@ -73,8 +73,8 @@ exit_code = 0
 def _connect_as_local_process() -> (io.TextIOWrapper, io.TextIOWrapper):
     """
 
-    :param ) -> (io.TextIOWrapper: 
-    :param io.TextIOWrapper: 
+    :param ) -> (io.TextIOWrapper:
+    :param io.TextIOWrapper:
 
     """
     # local process communicates via std.in and sdt.out, to allow to use 'print' method
@@ -87,7 +87,7 @@ def _connect_as_local_process() -> (io.TextIOWrapper, io.TextIOWrapper):
 def _connect_as_unix_socket_client(socket_file) -> socket:
     """
 
-    :param socket_file: 
+    :param socket_file:
 
     """
     if not exists(socket_file):
@@ -100,7 +100,7 @@ def _connect_as_unix_socket_client(socket_file) -> socket:
 def _connect_as_tcp_socket_client(port: int) -> socket:
     """
 
-    :param port: int: 
+    :param port: int:
 
     """
     sock = socket(AF_INET, SOCK_STREAM)
@@ -112,7 +112,7 @@ def _connect_as_tcp_socket_client(port: int) -> socket:
 def _start_reading_task(inpt: object) -> typing.Tuple[threading.Thread, queue.Queue]:
     """
 
-    :param inpt: object: 
+    :param inpt: object:
 
     """
     msg_queue = queue.Queue()
@@ -129,8 +129,8 @@ def _read_from_server_and_push_to_queue_msg(
 ) -> None:
     """
 
-    :param out: object: 
-    :param working_queue: queue.Queue: 
+    :param out: object:
+    :param working_queue: queue.Queue:
 
     """
     global WAITING_DATA_TIMEOUT_IN_SECONDS
@@ -161,9 +161,9 @@ def _read_from_server_and_push_to_queue_msg(
 def _process_event(addon: typing.Dict[str, object], msg: str) -> None:
     """
 
-    :param addon: typing.Dict[str: 
-    :param object]: 
-    :param msg: str: 
+    :param addon: typing.Dict[str:
+    :param object]:
+    :param msg: str:
 
     """
     try:
@@ -188,9 +188,9 @@ def _start_processing_of_messages(
 ) -> threading.Thread:
     """
 
-    :param msg_queue: queue.Queue: 
-    :param addon: typing.Tuple[str: 
-    :param object]: 
+    :param msg_queue: queue.Queue:
+    :param addon: typing.Tuple[str:
+    :param object]:
 
     """
     working_thread = threading.Thread(
@@ -217,9 +217,9 @@ def _get_msg_from_queue_and_pass_to_processing(
 ) -> None:
     """
 
-    :param msg_queue: queue.Queue: 
-    :param addon: typing.Dict[str: 
-    :param object]: 
+    :param msg_queue: queue.Queue:
+    :param addon: typing.Dict[str:
+    :param object]:
 
     """
     global event_counter
@@ -236,8 +236,8 @@ def _get_msg_from_queue_and_pass_to_processing(
 def _get_msg_from_sending_queue_and_send_it(output: object, msg_queue: queue) -> None:
     """
 
-    :param output: object: 
-    :param msg_queue: queue: 
+    :param output: object:
+    :param msg_queue: queue:
 
     """
     global WAITING_DATA_TIMEOUT_IN_SECONDS
@@ -251,8 +251,8 @@ def _get_msg_from_sending_queue_and_send_it(output: object, msg_queue: queue) ->
 def _run_task_until_stop(task, params):
     """
 
-    :param task: 
-    :param params: 
+    :param task:
+    :param params:
 
     """
     global RUN
@@ -267,8 +267,8 @@ def _run_task_until_stop(task, params):
 def _send_msg(output: object, msg: str):
     """
 
-    :param output: object: 
-    :param msg: str: 
+    :param output: object:
+    :param msg: str:
 
     """
     if isinstance(output, io.TextIOWrapper):
@@ -284,7 +284,7 @@ def _send_msg(output: object, msg: str):
 def _start_writing_task(server_in: object):
     """
 
-    :param server_in: object: 
+    :param server_in: object:
 
     """
     msg_queue = queue.Queue()
@@ -299,8 +299,8 @@ def _start_writing_task(server_in: object):
 def _push_msg(queue: queue.Queue, msg: str):
     """
 
-    :param queue: queue.Queue: 
-    :param msg: str: 
+    :param queue: queue.Queue:
+    :param msg: str:
 
     """
     queue.put(msg)
@@ -312,10 +312,10 @@ def _add_event_handler(
 ) -> None:
     """
 
-    :param addon: typing.Dict[str: 
-    :param object]: 
-    :param event_type: str: 
-    :param handler: typing.Callable: 
+    :param addon: typing.Dict[str:
+    :param object]:
+    :param event_type: str:
+    :param handler: typing.Callable:
 
     """
     if event_type not in addon:
@@ -329,9 +329,9 @@ def _add_event_handler(
 def _handle_event_sending_it_to_server(addon, event_type, raw_msg_event):
     """
 
-    :param addon: 
-    :param event_type: 
-    :param raw_msg_event: 
+    :param addon:
+    :param event_type:
+    :param raw_msg_event:
 
     """
     send_msg_queue = addon["send_msg_queue"]
@@ -341,11 +341,11 @@ def _handle_event_sending_it_to_server(addon, event_type, raw_msg_event):
 def _request_data(addon, alias, req_id, event_type, params):
     """
 
-    :param addon: 
-    :param alias: 
-    :param req_id: 
-    :param event_type: 
-    :param params: 
+    :param addon:
+    :param alias:
+    :param req_id:
+    :param event_type:
+    :param params:
 
     """
     msg = FIELD_SEPARATOR.join(
@@ -357,8 +357,8 @@ def _request_data(addon, alias, req_id, event_type, params):
 def _get_parameters_from_msg(type_token: str, msg: str):
     """
 
-    :param type_token: str: 
-    :param msg: str: 
+    :param type_token: str:
+    :param msg: str:
 
     """
     tokens = msg.split(FIELD_SEPARATOR)
@@ -441,9 +441,9 @@ def _get_parameters_from_msg(type_token: str, msg: str):
 def _push_msg_to_event_queue(addon: typing.Dict[str, object], msg: str) -> None:
     """
 
-    :param addon: typing.Dict[str: 
-    :param object]: 
-    :param msg: str: 
+    :param addon: typing.Dict[str:
+    :param object]:
+    :param msg: str:
 
     """
     event_queue = addon["event_queue"]
@@ -487,15 +487,15 @@ def start_addon(
 ):
     """
 
-    :param addon: typing.Dict[str: 
-    :param object]: 
-    :param add_instrument_handler: typing.Callable[[typing.Dict[str: 
-    :param str: 
-    :param bool: 
-    :param float: 
-    :param float]: 
-    :param None]: 
-    :param detach_instrument_handler: typing.Callable[[str]: 
+    :param addon: typing.Dict[str:
+    :param object]:
+    :param add_instrument_handler: typing.Callable[[typing.Dict[str:
+    :param str:
+    :param bool:
+    :param float:
+    :param float]:
+    :param None]:
+    :param detach_instrument_handler: typing.Callable[[str]:
 
     """
     # register event handler for events which should be sent to the server from the client
@@ -576,14 +576,14 @@ def _get_default_add_instrument_handler(
 ]:
     """
 
-    :param add_instrument_handler: typing.Callable[[typing.Dict[str: 
-    :param object]: 
-    :param str: 
-    :param bool: 
-    :param float: 
-    :param typing.Dict[str: 
-    :param ]: 
-    :param None: 
+    :param add_instrument_handler: typing.Callable[[typing.Dict[str:
+    :param object]:
+    :param str:
+    :param bool:
+    :param float:
+    :param typing.Dict[str:
+    :param ]:
+    :param None:
 
     """
     def _default_instrument_handler(
@@ -598,14 +598,14 @@ def _get_default_add_instrument_handler(
     ):
         """
 
-        :param addon: 
-        :param alias: 
-        :param fullname: 
-        :param is_crypto: 
-        :param pips: 
-        :param size_multiplier: 
-        :param instrument_multiplier: 
-        :param supported_features: 
+        :param addon:
+        :param alias:
+        :param fullname:
+        :param is_crypto:
+        :param pips:
+        :param size_multiplier:
+        :param instrument_multiplier:
+        :param supported_features:
 
         """
         add_instrument_handler(
@@ -626,9 +626,9 @@ def _get_default_add_instrument_handler(
 def _finish_initialization(addon: typing.Dict[str, object], alias: str):
     """
 
-    :param addon: typing.Dict[str: 
-    :param object]: 
-    :param alias: str: 
+    :param addon: typing.Dict[str:
+    :param object]:
+    :param alias: str:
 
     """
     msg = FIELD_SEPARATOR.join((FINISHED_INITIALIZATION, alias))
@@ -649,10 +649,10 @@ def _stop_addon():
 def subscribe_to_trades(addon: typing.Dict[str, object], alias: str, req_id: int):
     """
 
-    :param addon: typing.Dict[str: 
-    :param object]: 
-    :param alias: str: 
-    :param req_id: int: 
+    :param addon: typing.Dict[str:
+    :param object]:
+    :param alias: str:
+    :param req_id: int:
 
     """
     _request_data(addon, alias, req_id, TRADE, ())
@@ -664,11 +664,11 @@ def subscribe_to_bars(
 ):
     """
 
-    :param addon: typing.Dict[str: 
-    :param object]: 
-    :param alias: str: 
-    :param req_id: int: 
-    :param interval_in_seconds: int: 
+    :param addon: typing.Dict[str:
+    :param object]:
+    :param alias: str:
+    :param req_id: int:
+    :param interval_in_seconds: int:
 
     """
     _request_data(addon, alias, req_id, BAR, [str(interval_in_seconds)])
@@ -677,10 +677,10 @@ def subscribe_to_bars(
 def subscribe_to_depth(addon: typing.Dict[str, object], alias: str, req_id: int):
     """
 
-    :param addon: typing.Dict[str: 
-    :param object]: 
-    :param alias: str: 
-    :param req_id: int: 
+    :param addon: typing.Dict[str:
+    :param object]:
+    :param alias: str:
+    :param req_id: int:
 
     """
     _request_data(addon, alias, req_id, DEPTH, ())
@@ -689,10 +689,10 @@ def subscribe_to_depth(addon: typing.Dict[str, object], alias: str, req_id: int)
 def subscribe_to_mbo(addon: typing.Dict[str, object], alias: str, req_id: int):
     """
 
-    :param addon: typing.Dict[str: 
-    :param object]: 
-    :param alias: str: 
-    :param req_id: int: 
+    :param addon: typing.Dict[str:
+    :param object]:
+    :param alias: str:
+    :param req_id: int:
 
     """
     _request_data(addon, alias, req_id, MBO, ())
@@ -701,10 +701,10 @@ def subscribe_to_mbo(addon: typing.Dict[str, object], alias: str, req_id: int):
 def subscribe_to_order_info(addon: typing.Dict[str, object], alias: str, req_id: int):
     """
 
-    :param addon: typing.Dict[str: 
-    :param object]: 
-    :param alias: str: 
-    :param req_id: int: 
+    :param addon: typing.Dict[str:
+    :param object]:
+    :param alias: str:
+    :param req_id: int:
 
     """
     _request_data(addon, alias, req_id, ORDER_INFO, ())
@@ -715,10 +715,10 @@ def subscribe_to_balance_updates(
 ):
     """
 
-    :param addon: typing.Dict[str: 
-    :param object]: 
-    :param alias: str: 
-    :param req_id: int: 
+    :param addon: typing.Dict[str:
+    :param object]:
+    :param alias: str:
+    :param req_id: int:
 
     """
     _request_data(addon, alias, req_id, BALANCE_UPDATE, ())
@@ -729,10 +729,10 @@ def subscribe_to_position_updates(
 ):
     """
 
-    :param addon: typing.Dict[str: 
-    :param object]: 
-    :param alias: str: 
-    :param req_id: int: 
+    :param addon: typing.Dict[str:
+    :param object]:
+    :param alias: str:
+    :param req_id: int:
 
     """
     _request_data(addon, alias, req_id, POSITION_UPDATE, ())
@@ -754,15 +754,15 @@ def register_indicator(
 ):
     """
 
-    :param addon: typing.Dict[str: 
-    :param object]: 
-    :param alias: str: 
-    :param req_id: int: 
-    :param indicator_name: str: 
-    :param graph_type: str: 
+    :param addon: typing.Dict[str:
+    :param object]:
+    :param alias: str:
+    :param req_id: int:
+    :param indicator_name: str:
+    :param graph_type: str:
     :param color:  (Default value = (0)
-    :param 255: 
-    :param 0): 
+    :param 255:
+    :param 0):
     :param line_style:  (Default value = "SOLID")
     :param initial_value:  (Default value = 0.0)
     :param show_line_by_default:  (Default value = True)
@@ -801,14 +801,14 @@ def add_number_settings_parameter(
 ):
     """
 
-    :param addon: typing.Dict[str: 
-    :param object]: 
-    :param alias: str: 
-    :param parameter_name: str: 
-    :param default_value: float: 
-    :param minimum: float: 
-    :param maximum: float: 
-    :param step: float: 
+    :param addon: typing.Dict[str:
+    :param object]:
+    :param alias: str:
+    :param parameter_name: str:
+    :param default_value: float:
+    :param minimum: float:
+    :param maximum: float:
+    :param step: float:
     :param reload_if_change:  (Default value = True)
 
     """
@@ -843,11 +843,11 @@ def add_boolean_settings_parameter(
 ):
     """
 
-    :param addon: typing.Dict[str: 
-    :param object]: 
-    :param alias: str: 
-    :param parameter_name: str: 
-    :param default_value: bool: 
+    :param addon: typing.Dict[str:
+    :param object]:
+    :param alias: str:
+    :param parameter_name: str:
+    :param default_value: bool:
     :param reload_if_change:  (Default value = True)
 
     """
@@ -873,11 +873,11 @@ def add_string_settings_parameter(
 ):
     """
 
-    :param addon: typing.Dict[str: 
-    :param object]: 
-    :param alias: str: 
-    :param parameter_name: str: 
-    :param default_value: str: 
+    :param addon: typing.Dict[str:
+    :param object]:
+    :param alias: str:
+    :param parameter_name: str:
+    :param default_value: str:
     :param reload_if_change:  (Default value = True)
 
     """
@@ -903,13 +903,13 @@ def add_color_settings_parameter(
 ) -> None:
     """
 
-    :param addon: typing.Dict[str: 
-    :param object]: 
-    :param alias: str: 
-    :param parameter_name: str: 
-    :param default_value: typing.Tuple[int: 
-    :param int: 
-    :param int]: 
+    :param addon: typing.Dict[str:
+    :param object]:
+    :param alias: str:
+    :param parameter_name: str:
+    :param default_value: typing.Tuple[int:
+    :param int:
+    :param int]:
     :param reload_if_change:  (Default value = True)
 
     """
@@ -935,11 +935,11 @@ def add_point(
 ) -> None:
     """
 
-    :param addon: typing.Dict[str: 
-    :param object]: 
-    :param alias: str: 
-    :param indicator_id: int: 
-    :param point: float: 
+    :param addon: typing.Dict[str:
+    :param object]:
+    :param alias: str:
+    :param indicator_id: int:
+    :param point: float:
 
     """
     try:
@@ -957,9 +957,9 @@ def send_order(
 ) -> None:
     """
 
-    :param addon: typing.Dict[str: 
-    :param object]: 
-    :param order_send_parameters: OrderSendParameters: 
+    :param addon: typing.Dict[str:
+    :param object]:
+    :param order_send_parameters: OrderSendParameters:
 
     """
     try:
@@ -982,10 +982,10 @@ def cancel_order(
 ) -> None:
     """
 
-    :param addon: typing.Dict[str: 
-    :param object]: 
-    :param alias: str: 
-    :param order_id: str: 
+    :param addon: typing.Dict[str:
+    :param object]:
+    :param alias: str:
+    :param order_id: str:
     :param is_batch_end: bool:  (Default value = True)
     :param batch_id: int:  (Default value = float("nan"))
 
@@ -1011,11 +1011,11 @@ def move_order(
 ) -> None:
     """
 
-    :param addon: typing.Dict[str: 
-    :param object]: 
-    :param alias: str: 
-    :param order_id: str: 
-    :param limit_price: float: 
+    :param addon: typing.Dict[str:
+    :param object]:
+    :param alias: str:
+    :param order_id: str:
+    :param limit_price: float:
     :param stop_price: float:  (Default value = float("nan"))
 
     """
@@ -1035,11 +1035,11 @@ def move_order_to_market(
 ) -> None:
     """
 
-    :param addon: typing.Dict[str: 
-    :param object]: 
-    :param alias: str: 
-    :param order_id: str: 
-    :param offset: int: 
+    :param addon: typing.Dict[str:
+    :param object]:
+    :param alias: str:
+    :param order_id: str:
+    :param offset: int:
 
     """
     try:
@@ -1055,11 +1055,11 @@ def resize_order(
 ) -> None:
     """
 
-    :param addon: typing.Dict[str: 
-    :param object]: 
-    :param alias: str: 
-    :param order_id: str: 
-    :param size: int: 
+    :param addon: typing.Dict[str:
+    :param object]:
+    :param alias: str:
+    :param order_id: str:
+    :param size: int:
 
     """
     try:
@@ -1078,9 +1078,9 @@ def subscribe_to_indicator(
 ) -> None:
     """
 
-    :param addon: typing.Dict[str: 
-    :param object]: 
-    :param addon_name: str: 
+    :param addon: typing.Dict[str:
+    :param object]:
+    :param addon_name: str:
     :param generator_name: str:  (Default value = None)
     :param does_require_filtering: bool:  (Default value = False)
 
@@ -1105,10 +1105,10 @@ def send_user_message(
 ) -> None:
     """
 
-    :param addon: typing.Dict[str: 
-    :param object]: 
-    :param alias: str: 
-    :param message: str: 
+    :param addon: typing.Dict[str:
+    :param object]:
+    :param alias: str:
+    :param message: str:
 
     """
     try:
@@ -1125,8 +1125,8 @@ def send_user_message(
 def wait_until_addon_is_turned_off(addon: typing.Dict[str, object]) -> None:
     """
 
-    :param addon: typing.Dict[str: 
-    :param object]: 
+    :param addon: typing.Dict[str:
+    :param object]:
 
     """
     global exit_code
@@ -1146,15 +1146,15 @@ def add_trades_handler(
 ) -> None:
     """
 
-    :param addon: typing.Dict[str: 
-    :param object]: 
-    :param handler: typing.Callable[[str: 
-    :param float: 
-    :param int: 
-    :param bool: 
-    :param str: 
-    :param str]: 
-    :param None]: 
+    :param addon: typing.Dict[str:
+    :param object]:
+    :param handler: typing.Callable[[str:
+    :param float:
+    :param int:
+    :param bool:
+    :param str:
+    :param str]:
+    :param None]:
 
     """
     _add_event_handler(addon, TRADE, handler)
@@ -1163,8 +1163,8 @@ def add_trades_handler(
 def add_bar_handler(addon, handler) -> None:
     """
 
-    :param addon: 
-    :param handler: 
+    :param addon:
+    :param handler:
 
     """
     _add_event_handler(addon, BAR, handler)
@@ -1176,13 +1176,13 @@ def add_mbo_handler(
 ) -> None:
     """
 
-    :param addon: typing.Dict[str: 
-    :param typing.Any]: 
-    :param handler: typing.Callable[[str: 
-    :param str: 
-    :param int: 
-    :param int]: 
-    :param None]: 
+    :param addon: typing.Dict[str:
+    :param typing.Any]:
+    :param handler: typing.Callable[[str:
+    :param str:
+    :param int:
+    :param int]:
+    :param None]:
 
     """
     _add_event_handler(addon, MBO, handler)
@@ -1194,13 +1194,13 @@ def add_depth_handler(
 ) -> None:
     """
 
-    :param addon: typing.Dict[str: 
-    :param object]: 
-    :param handler: typing.Callable[[str: 
-    :param bool: 
-    :param int: 
-    :param int]: 
-    :param None]: 
+    :param addon: typing.Dict[str:
+    :param object]:
+    :param handler: typing.Callable[[str:
+    :param bool:
+    :param int:
+    :param int]:
+    :param None]:
 
     """
     _add_event_handler(addon, DEPTH, handler)
@@ -1211,11 +1211,11 @@ def add_indicator_response_handler(
 ) -> None:
     """
 
-    :param addon: typing.Dict[str: 
-    :param object]: 
-    :param handler: typing.Callable[[int: 
-    :param int]: 
-    :param None]: 
+    :param addon: typing.Dict[str:
+    :param object]:
+    :param handler: typing.Callable[[int:
+    :param int]:
+    :param None]:
 
     """
     _add_event_handler(addon, INDICATOR_RESPONSE, handler)
@@ -1226,10 +1226,10 @@ def add_on_interval_handler(
 ) -> None:
     """
 
-    :param addon: typing.Dict[str: 
-    :param object]: 
-    :param handler: typing.Callable[[]: 
-    :param None]: 
+    :param addon: typing.Dict[str:
+    :param object]:
+    :param handler: typing.Callable[[]:
+    :param None]:
 
     """
     _add_event_handler(addon, ON_INTERVAL, handler)
@@ -1240,10 +1240,10 @@ def add_response_data_handler(
 ) -> None:
     """
 
-    :param addon: typing.Dict[str: 
-    :param object]: 
-    :param handler: typing.Callable[[int]: 
-    :param None]: 
+    :param addon: typing.Dict[str:
+    :param object]:
+    :param handler: typing.Callable[[int]:
+    :param None]:
 
     """
     _add_event_handler(addon, RESP_DATA, handler)
@@ -1255,11 +1255,11 @@ def add_on_setting_change_handler(
 ) -> None:
     """
 
-    :param addon: typing.Dict[str: 
-    :param object]: 
-    :param handler: typing.Callable[[str: 
-    :param str: 
-    :param None]: 
+    :param addon: typing.Dict[str:
+    :param object]:
+    :param handler: typing.Callable[[str:
+    :param str:
+    :param None]:
 
     """
     _add_event_handler(addon, ON_SETTINGS_PARAMETER_CHANGED, handler)
@@ -1271,13 +1271,13 @@ def add_on_order_executed_handler(
 ) -> None:
     """
 
-    :param addon: typing.Dict[str: 
-    :param typing.Any]: 
-    :param handler: typing.Callable[[str: 
-    :param str: 
-    :param typing.Dict[str: 
-    :param typing.Any]]: 
-    :param None]: 
+    :param addon: typing.Dict[str:
+    :param typing.Any]:
+    :param handler: typing.Callable[[str:
+    :param str:
+    :param typing.Dict[str:
+    :param typing.Any]]:
+    :param None]:
 
     """
     _add_event_handler(addon, EXECUTE_ORDER, handler)
@@ -1289,12 +1289,12 @@ def add_on_order_updated_handler(
 ) -> None:
     """
 
-    :param addon: typing.Dict[str: 
-    :param typing.Any]: 
-    :param handler: typing.Callable[[str: 
-    :param typing.Dict[str: 
-    :param typing.Any]]: 
-    :param None]: 
+    :param addon: typing.Dict[str:
+    :param typing.Any]:
+    :param handler: typing.Callable[[str:
+    :param typing.Dict[str:
+    :param typing.Any]]:
+    :param None]:
 
     """
     _add_event_handler(addon, UPDATE_ORDER, handler)
@@ -1306,12 +1306,12 @@ def add_on_balance_update_handler(
 ) -> None:
     """
 
-    :param addon: typing.Dict[str: 
-    :param typing.Any]: 
-    :param handler: typing.Callable[[str: 
-    :param typing.Dict[str: 
-    :param typing.Any]]: 
-    :param None]: 
+    :param addon: typing.Dict[str:
+    :param typing.Any]:
+    :param handler: typing.Callable[[str:
+    :param typing.Dict[str:
+    :param typing.Any]]:
+    :param None]:
 
     """
     _add_event_handler(addon, BALANCE_UPDATE, handler)
@@ -1323,12 +1323,12 @@ def add_on_position_update_handler(
 ) -> None:
     """
 
-    :param addon: typing.Dict[str: 
-    :param typing.Any]: 
-    :param handler: typing.Callable[[str: 
-    :param typing.Dict[str: 
-    :param typing.Any]]: 
-    :param None]: 
+    :param addon: typing.Dict[str:
+    :param typing.Any]:
+    :param handler: typing.Callable[[str:
+    :param typing.Dict[str:
+    :param typing.Any]]:
+    :param None]:
 
     """
     _add_event_handler(addon, POSITION_UPDATE, handler)
@@ -1339,10 +1339,10 @@ def add_broadcasting_handler(
 ) -> None:
     """
 
-    :param addon: typing.Dict[str: 
-    :param object]: 
-    :param handler: typing.Callable[[str: 
-    :param None]: 
+    :param addon: typing.Dict[str:
+    :param object]:
+    :param handler: typing.Callable[[str:
+    :param None]:
 
     """
     _add_event_handler(addon, BROADCASTING, handler)
@@ -1354,12 +1354,12 @@ def add_broadcasting_provider_status_handler(
 ) -> None:
     """
 
-    :param addon: typing.Dict[str: 
-    :param object]: 
-    :param handler: typing.Callable[[str: 
-    :param typing.Dict[str: 
-    :param typing.Any]]: 
-    :param None]: 
+    :param addon: typing.Dict[str:
+    :param object]:
+    :param handler: typing.Callable[[str:
+    :param typing.Dict[str:
+    :param typing.Any]]:
+    :param None]:
 
     """
     _add_event_handler(addon, PROVIDERS_STATUS, handler)
@@ -1370,10 +1370,10 @@ def add_broadcasting_settings_handler(
 ) -> None:
     """
 
-    :param addon: typing.Dict[str: 
-    :param object]: 
-    :param handler: typing.Callable[[str: 
-    :param None]: 
+    :param addon: typing.Dict[str:
+    :param object]:
+    :param handler: typing.Callable[[str:
+    :param None]:
 
     """
     _add_event_handler(addon, BROADCASTING_SETTINGS, handler)
@@ -1391,11 +1391,11 @@ def on_depth(
 ) -> None:
     """
 
-    :param order_book: typing.Dict[str: 
-    :param SortedDict]: 
-    :param is_bid: bool: 
-    :param price: int: 
-    :param size: int: 
+    :param order_book: typing.Dict[str:
+    :param SortedDict]:
+    :param is_bid: bool:
+    :param price: int:
+    :param size: int:
 
     """
     if not isinstance(price, int) or not isinstance(size, int):
@@ -1422,8 +1422,8 @@ def get_bbo(
 ) -> typing.Tuple[int or None, int or None]:
     """
 
-    :param order_book: typing.Dict[str: 
-    :param SortedDict]: 
+    :param order_book: typing.Dict[str:
+    :param SortedDict]:
 
     """
     try:
@@ -1443,9 +1443,9 @@ def get_sum(
 ) -> typing.Tuple[int, int]:
     """
 
-    :param order_book: typing.Dict[str: 
-    :param SortedDict]: 
-    :param levels_num: int: 
+    :param order_book: typing.Dict[str:
+    :param SortedDict]:
+    :param levels_num: int:
 
     """
     try:
@@ -1486,12 +1486,12 @@ def on_new_order(
 ) -> None:
     """
 
-    :param mbo_order_book: typing.Dict[str: 
-    :param typing.Any]: 
-    :param order_id: str: 
-    :param is_bid: bool: 
-    :param price: int: 
-    :param size: int: 
+    :param mbo_order_book: typing.Dict[str:
+    :param typing.Any]:
+    :param order_id: str:
+    :param is_bid: bool:
+    :param price: int:
+    :param size: int:
 
     """
     orders = mbo_order_book["orders"]
@@ -1524,11 +1524,11 @@ def on_replace_order(
 ) -> None:
     """
 
-    :param mbo_order_book: typing.Dict[str: 
-    :param typing.Any]: 
-    :param order_id: str: 
-    :param new_price: int: 
-    :param new_size: int: 
+    :param mbo_order_book: typing.Dict[str:
+    :param typing.Any]:
+    :param order_id: str:
+    :param new_price: int:
+    :param new_size: int:
 
     """
     orders = mbo_order_book["orders"]
@@ -1560,9 +1560,9 @@ def on_remove_order(
 ) -> None:
     """
 
-    :param mbo_order_book: typing.Dict[str: 
-    :param typing.Any]: 
-    :param order_id: str: 
+    :param mbo_order_book: typing.Dict[str:
+    :param typing.Any]:
+    :param order_id: str:
 
     """
     orders = mbo_order_book["orders"]
@@ -1585,8 +1585,8 @@ def on_remove_order(
 def get_all_order_ids(mbo_order_book: typing.Dict[str, typing.Any]) -> typing.List[str]:
     """
 
-    :param mbo_order_book: typing.Dict[str: 
-    :param typing.Any]: 
+    :param mbo_order_book: typing.Dict[str:
+    :param typing.Any]:
 
     """
     orders = mbo_order_book["orders"]
@@ -1596,9 +1596,9 @@ def get_all_order_ids(mbo_order_book: typing.Dict[str, typing.Any]) -> typing.Li
 def has_order(mbo_order_book: typing.Dict[str, typing.Any], order_id: str) -> bool:
     """
 
-    :param mbo_order_book: typing.Dict[str: 
-    :param typing.Any]: 
-    :param order_id: str: 
+    :param mbo_order_book: typing.Dict[str:
+    :param typing.Any]:
+    :param order_id: str:
 
     """
     orders = mbo_order_book["orders"]
@@ -1610,9 +1610,9 @@ def get_order(
 ) -> typing.Tuple[bool, int, int]:
     """
 
-    :param mbo_order_book: typing.Dict[str: 
-    :param typing.Any]: 
-    :param order_id: str: 
+    :param mbo_order_book: typing.Dict[str:
+    :param typing.Any]:
+    :param order_id: str:
 
     """
     orders = mbo_order_book["orders"]
@@ -1624,9 +1624,9 @@ def get_order(
 def get_order_price(mbo_order_book: typing.Dict[str, typing.Any], order_id: str) -> int:
     """
 
-    :param mbo_order_book: typing.Dict[str: 
-    :param typing.Any]: 
-    :param order_id: str: 
+    :param mbo_order_book: typing.Dict[str:
+    :param typing.Any]:
+    :param order_id: str:
 
     """
     orders = mbo_order_book["orders"]
@@ -1639,9 +1639,9 @@ def get_order_price(mbo_order_book: typing.Dict[str, typing.Any], order_id: str)
 def get_order_size(mbo_order_book: typing.Dict[str, typing.Any], order_id: str) -> int:
     """
 
-    :param mbo_order_book: typing.Dict[str: 
-    :param typing.Any]: 
-    :param order_id: str: 
+    :param mbo_order_book: typing.Dict[str:
+    :param typing.Any]:
+    :param order_id: str:
 
     """
     orders = mbo_order_book["orders"]
@@ -1654,9 +1654,9 @@ def get_order_size(mbo_order_book: typing.Dict[str, typing.Any], order_id: str) 
 def get_order_side(mbo_order_book: typing.Dict[str, typing.Any], order_id: str) -> bool:
     """
 
-    :param mbo_order_book: typing.Dict[str: 
-    :param typing.Any]: 
-    :param order_id: str: 
+    :param mbo_order_book: typing.Dict[str:
+    :param typing.Any]:
+    :param order_id: str:
 
     """
     orders = mbo_order_book["orders"]
