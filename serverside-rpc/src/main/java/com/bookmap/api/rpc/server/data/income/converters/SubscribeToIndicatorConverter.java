@@ -28,6 +28,6 @@ public class SubscribeToIndicatorConverter implements EventConverter<String, Abs
     public SubscribeToIndicatorEvent convert(String entity) {
         String[] tokens = entity.split(FIELDS_DELIMITER);
         System.out.println("SubscribeToIndicatorConverter: " + entity);
-        return new SubscribeToIndicatorEvent(tokens[1], tokens[2].equals("None") ? null : tokens[2], Boolean.parseBoolean(tokens[3]));
+        return new SubscribeToIndicatorEvent(tokens[1], "None".equals(tokens[2]) ? null : tokens[2], Boolean.parseBoolean(tokens[3]));
     }
 }
