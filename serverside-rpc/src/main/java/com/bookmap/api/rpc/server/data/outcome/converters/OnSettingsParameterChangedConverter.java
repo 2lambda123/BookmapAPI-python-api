@@ -13,6 +13,13 @@ public class OnSettingsParameterChangedConverter implements EventConverter<OnSet
 	OnSettingsParameterChangedConverter(){}
 
 	@Override
+	/**
+	 * Converts the OnSettingsParameterChangedEvent entity to a string representation.
+	 *
+	 * @param entity the OnSettingsParameterChangedEvent entity to be converted
+	 * @return a string representation of the entity
+	 * @throws NullPointerException if the entity is null
+ 	*/
 	public String convert(OnSettingsParameterChangedEvent entity) {
 		StringBuilder builder = new StringBuilder();
 		builder.append(entity.type.code)
