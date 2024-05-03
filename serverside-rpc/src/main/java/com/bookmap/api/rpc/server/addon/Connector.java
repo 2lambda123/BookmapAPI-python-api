@@ -24,6 +24,12 @@ public class Connector {
         connectionListener = new ConnectionListener();
     }
 
+    /**
+     * Returns the BroadcasterConsumer object.
+     *
+     * @return the BroadcasterConsumer object
+     * @throws NullPointerException if the BroadcasterConsumer object is null
+     */
     public BroadcasterConsumer getBroadcasterConsumer() {
         return broadcasterConsumer;
     }
@@ -55,12 +61,28 @@ public class Connector {
         return connectionListener.isConnected();
     }
 
+    /**
+     * Checks if the application is connected to the specified provider.
+     *
+     * @param providerName the name of the provider to check connection with
+     * @return true if the application is connected to the specified provider, false otherwise
+     * @throws NullPointerException if the specified provider name is null
+     */
     public boolean isConnectedToProvider(String providerName) {
         System.out.println(broadcasterConsumer.getSubscriptionProviders());
         return broadcasterConsumer.getSubscriptionProviders().contains(providerName);
     }
 
 
+    /**
+     * Subscribes to live data from a specified generator.
+     *
+     * @param generatorName the name of the generator
+     * @param eventLoop the event loop to use for handling events
+     * @param providerName the name of the data provider
+     * @param doesRequireFiltering indicates whether filtering is required
+     * @throws IllegalStateException if not connected to the data source
+     */
     public void subscribeToLiveData(String generatorName, EventLoop eventLoop, String providerName, boolean doesRequireFiltering) {
         if (isConnected()) {
             Optional<GeneratorInfo> generatorInfoOptional = getGeneratorInfo(generatorName, providerName);
