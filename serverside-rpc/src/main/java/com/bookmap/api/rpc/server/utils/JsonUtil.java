@@ -55,7 +55,7 @@ public class JsonUtil {
                 field.setAccessible(true);
 
                 String fieldName = field.getName();
-                if (fieldName.equals("serialVersionUID")) {
+                if ("serialVersionUID".equals(fieldName)) {
                     continue;
                 }
                 fieldNames.add(field);
