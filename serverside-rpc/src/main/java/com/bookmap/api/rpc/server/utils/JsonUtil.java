@@ -20,6 +20,13 @@ public class JsonUtil {
 
     private static final Gson gson = new GsonBuilder().create();
 
+    /**
+     * Converts the given object to a JSON string representation.
+     *
+     * @param o the object to be converted to JSON string
+     * @return the JSON string representation of the object
+     * @throws IllegalAccessException if the access to the specified field is denied
+     */
     public static String convertObjectToJsonString(Object o) throws IllegalAccessException {
         JsonObject jsonObject = new JsonObject();
 //        ObjectMapper objectMapper = new ObjectMapper();
@@ -61,6 +68,15 @@ public class JsonUtil {
         return jsonObject.toString();
     }
 
+    /**
+     * Returns the string value of the given field value.
+     *
+     * @param fieldValue the field value to convert to string
+     * @param field the Field object representing the field
+     * @return the string representation of the field value, or null if the field value is null
+     * @throws NullPointerException if the field is null
+     * @throws ClassCastException if the field type is not compatible with Map
+     */
     private static String getStringValue(Object fieldValue, Field field) {
         if (fieldValue != null) {
             if (field.getType().equals(Map.class)) {
