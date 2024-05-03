@@ -94,7 +94,8 @@ def _connect_as_tcp_socket_client(port: int) -> socket:
 def _start_reading_task(inpt: object) -> typing.Tuple[threading.Thread, queue.Queue]:
     msg_queue = queue.Queue()
     running_thread = threading.Thread(
-        target=_run_task_until_stop, args=(_read_from_server_and_push_to_queue_msg, (inpt, msg_queue))
+        target=_run_task_until_stop, args=(
+            _read_from_server_and_push_to_queue_msg, (inpt, msg_queue))
     )
     running_thread.start()
     return running_thread, msg_queue
@@ -116,7 +117,8 @@ def _read_from_server_and_push_to_queue_msg(out: object, working_queue: queue.Qu
             for i in range(0, len(MSGS_BUFFER)):
                 if MSGS_BUFFER[i] == 10:  # 10 - \n symbol
                     is_win_ending = i != 0 and MSGS_BUFFER[i - 1] == 13
-                    msg = MSGS_BUFFER[begin_index:(i - 1 if is_win_ending else i)].decode("utf-8")
+                    msg = MSGS_BUFFER[begin_index:(
+                        i - 1 if is_win_ending else i)].decode("utf-8")
                     working_queue.put(msg)
                     begin_index = i + 1
             del MSGS_BUFFER[:begin_index]
@@ -144,7 +146,8 @@ def _process_event(addon: typing.Dict[str, object], msg: str) -> None:
 
 def _start_processing_of_messages(msg_queue: queue.Queue, addon: typing.Tuple[str, object]) -> threading.Thread:
     working_thread = threading.Thread(
-        target=_run_task_until_stop, args=(_get_msg_from_queue_and_pass_to_processing, (msg_queue, addon))
+        target=_run_task_until_stop, args=(
+            _get_msg_from_queue_and_pass_to_processing, (msg_queue, addon))
     )
     working_thread.start()
     return working_thread
@@ -155,7 +158,8 @@ def _count_processed_events() -> None:
     global RUN
     while RUN:
         with counter_lock:
-            print("Events processed for the period " + str(event_counter), flush=True)
+            print("Events processed for the period " +
+                  str(event_counter), flush=True)
             event_counter = 0
         time.sleep(1)
 
@@ -206,7 +210,8 @@ def _send_msg(output: object, msg: str):
 def _start_writing_task(server_in: object):
     msg_queue = queue.Queue()
     running_thread = threading.Thread(
-        target=_run_task_until_stop, args=(_get_msg_from_sending_queue_and_send_it, (server_in, msg_queue))
+        target=_run_task_until_stop, args=(
+            _get_msg_from_sending_queue_and_send_it, (server_in, msg_queue))
     )
     running_thread.start()
     return running_thread, msg_queue
@@ -232,7 +237,8 @@ def _handle_event_sending_it_to_server(addon, event_type, raw_msg_event):
 
 
 def _request_data(addon, alias, req_id, event_type, params):
-    msg = FIELD_SEPARATOR.join([REQ_DATA, alias, str(req_id), event_type, FIELD_SEPARATOR.join(params)])
+    msg = FIELD_SEPARATOR.join([REQ_DATA, alias, str(
+        req_id), event_type, FIELD_SEPARATOR.join(params)])
     _push_msg_to_event_queue(addon, msg)
 
 
@@ -247,7 +253,7 @@ def _get_parameters_from_msg(type_token: str, msg: str):
     elif type_token == TRADE:
         # alias, price, size, is_otc, is_bid_aggressor, is_execution_start, is_execution_end, aggressor_order_id, passive_order_id
         return tokens[1], float(tokens[2]), int(tokens[3]), tokens[4] == "1", tokens[5] == "1", tokens[6] == "1", \
-                                                            tokens[7] == "1", str(tokens[8]), str(tokens[9])
+            tokens[7] == "1", str(tokens[8]), str(tokens[9])
     elif type_token == INSTRUMENT_INFO:
         # alias, full_name, is_crypto, pips, size_multiplier, instrument_multiplier
         return tokens[1], tokens[2], tokens[3] == "1", float(tokens[4]), float(tokens[5]), float(tokens[6]), json.loads(tokens[7])
@@ -269,7 +275,8 @@ def _get_parameters_from_msg(type_token: str, msg: str):
         if tokens[3] == "NUMBER":
             new_value = float(tokens[4])
         elif tokens[3] == "COLOR":
-            new_value = tuple(int(color_part) for color_part in ",".split(tokens[4]))
+            new_value = tuple(int(color_part)
+                              for color_part in ",".split(tokens[4]))
         elif tokens[3] == "BOOLEAN":
             new_value = "true" == tokens[4]
         else:
@@ -306,7 +313,8 @@ def create_addon(connection_type=TCP_SOCKET, settings=None):
     global RUN
     if RUN:
         # TODO: single script several addons? Might be useful when BM will provide the way to dynamically load jar files.
-        raise Exception("Addon is already created, only one addon is supported")
+        raise Exception(
+            "Addon is already created, only one addon is supported")
     RUN = True
     if connection_type == LOCAL_PROCESS:
         server_in, server_out = _connect_as_local_process()
@@ -331,19 +339,27 @@ def start_addon(addon: typing.Dict[str, object],
     # register event handler for events which should be sent to the server from the client
     _add_event_handler(addon, CLIENT_INIT, _handle_event_sending_it_to_server)
     _add_event_handler(addon, REQ_DATA, _handle_event_sending_it_to_server)
-    _add_event_handler(addon, REGISTER_INDICATOR, _handle_event_sending_it_to_server)
-    _add_event_handler(addon, ADD_POINT_TO_INDICATOR, _handle_event_sending_it_to_server)
-    _add_event_handler(addon, FINISHED_INITIALIZATION, _handle_event_sending_it_to_server)
-    _add_event_handler(addon, ADD_SETTING_FIELD, _handle_event_sending_it_to_server)
+    _add_event_handler(addon, REGISTER_INDICATOR,
+                       _handle_event_sending_it_to_server)
+    _add_event_handler(addon, ADD_POINT_TO_INDICATOR,
+                       _handle_event_sending_it_to_server)
+    _add_event_handler(addon, FINISHED_INITIALIZATION,
+                       _handle_event_sending_it_to_server)
+    _add_event_handler(addon, ADD_SETTING_FIELD,
+                       _handle_event_sending_it_to_server)
     _add_event_handler(addon, SEND_ORDER, _handle_event_sending_it_to_server)
     _add_event_handler(addon, CANCEL_ORDER, _handle_event_sending_it_to_server)
     _add_event_handler(addon, MOVE_ORDER, _handle_event_sending_it_to_server)
-    _add_event_handler(addon, MOVE_ORDER_TO_MARKET, _handle_event_sending_it_to_server)
+    _add_event_handler(addon, MOVE_ORDER_TO_MARKET,
+                       _handle_event_sending_it_to_server)
     _add_event_handler(addon, RESIZE_ORDER, _handle_event_sending_it_to_server)
-    _add_event_handler(addon, INSTRUMENT_INFO, _get_default_add_instrument_handler(add_instrument_handler))
+    _add_event_handler(addon, INSTRUMENT_INFO, _get_default_add_instrument_handler(
+        add_instrument_handler))
     _add_event_handler(addon, INSTRUMENT_DETACHED, detach_instrument_handler)
-    _add_event_handler(addon, REGISTER_BROADCASTING_PROVIDER, _handle_event_sending_it_to_server)
-    _add_event_handler(addon, SEND_USER_MESSAGE, _handle_event_sending_it_to_server)
+    _add_event_handler(addon, REGISTER_BROADCASTING_PROVIDER,
+                       _handle_event_sending_it_to_server)
+    _add_event_handler(addon, SEND_USER_MESSAGE,
+                       _handle_event_sending_it_to_server)
 
     if "server_in" in addon and "server_out" in addon:
         server_in = addon["server_in"]
@@ -368,8 +384,8 @@ def start_addon(addon: typing.Dict[str, object],
 
 
 def _get_default_add_instrument_handler(add_instrument_handler: typing.Callable[
-    [typing.Dict[str, object], str, str, bool, float, float, float, typing.Dict[str, object]], None]) -> typing.Callable[
-    [typing.Dict[str, object], str, str, bool, float, float, float, typing.Dict[str, object]], None]:
+        [typing.Dict[str, object], str, str, bool, float, float, float, typing.Dict[str, object]], None]) -> typing.Callable[
+        [typing.Dict[str, object], str, str, bool, float, float, float, typing.Dict[str, object]], None]:
     def _default_instrument_handler(addon, alias, fullname, is_crypto, pips, size_multiplier,
                                     instrument_multiplier, supported_features):
         add_instrument_handler(addon, alias, fullname, is_crypto, pips, size_multiplier,
@@ -393,7 +409,7 @@ def _stop_addon():
     exit_code = 1
 
 
-## data subscriber wrappers
+# data subscriber wrappers
 def subscribe_to_trades(addon: typing.Dict[str, object], alias: str, req_id: int):
     _request_data(addon, alias, req_id, TRADE, ())
 
@@ -423,7 +439,7 @@ def subscribe_to_position_updates(addon: typing.Dict[str, object], alias: str, r
     _request_data(addon, alias, req_id, POSITION_UPDATE, ())
 
 
-####### INDICATORS
+# INDICATORS
 def register_indicator(addon: typing.Dict[str, object], alias: str, req_id: int, indicator_name: str, graph_type: str,
                        color=(0, 255, 0),
                        line_style="SOLID",
@@ -666,9 +682,9 @@ def wait_until_addon_is_turned_off(addon: typing.Dict[str, object]) -> None:
     sys.exit(exit_code)
 
 
-### HANDLERS wrappers
+# HANDLERS wrappers
 def add_trades_handler(addon: typing.Dict[str, object], handler: typing.Callable[
-    [str, float, int, bool, bool, bool, bool, str, str], None]) -> None:
+        [str, float, int, bool, bool, bool, bool, str, str], None]) -> None:
     _add_event_handler(addon, TRADE, handler)
 
 
@@ -702,7 +718,7 @@ def add_response_data_handler(addon: typing.Dict[str, object],
 
 
 def add_on_setting_change_handler(addon: typing.Dict[str, object], handler: typing.Callable[
-    [str, str, str, object], None]) -> None:
+        [str, str, str, object], None]) -> None:
     _add_event_handler(addon, ON_SETTINGS_PARAMETER_CHANGED, handler)
 
 
@@ -747,15 +763,16 @@ def add_broadcasting_settings_handler(
     _add_event_handler(addon, BROADCASTING_SETTINGS, handler)
 
 
-################ Util objects
-### Order book
+# Util objects
+# Order book
 def create_order_book() -> typing.Dict[str, SortedDict]:
     return {"asks": SortedDict(), "bids": SortedDict(lambda x: -x)}
 
 
 def on_depth(order_book: typing.Dict[str, SortedDict], is_bid: bool, price: int, size: int) -> None:
     if not isinstance(price, int) or not isinstance(size, int):
-        raise ValueError("Order book is supposed to be filled in by values in Ticks")
+        raise ValueError(
+            "Order book is supposed to be filled in by values in Ticks")
 
     try:
         side_dict_key = "bids" if is_bid else "asks"
@@ -778,7 +795,8 @@ def get_bbo(order_book: typing.Dict[str, SortedDict]) -> typing.Tuple[int or Non
         bid_dict = order_book["bids"]
         ask_dict = order_book["asks"]
         return (bid_dict.keys()[0], bid_dict.values()[0]) if len(bid_dict) > 0 else None, \
-            (ask_dict.keys()[0], ask_dict.values()[0]) if len(ask_dict) > 0 else None
+            (ask_dict.keys()[0], ask_dict.values()
+             [0]) if len(ask_dict) > 0 else None
     except Exception:
         traceback.print_exc()
         _stop_addon()
@@ -790,8 +808,10 @@ def get_sum(order_book: typing.Dict[str, SortedDict], levels_num: int) -> typing
         bids, asks = order_book["bids"], order_book["asks"]
         bids_keys, asks_keys = bids.keys(), asks.keys()
         bids_size, asks_size = len(bids_keys), len(asks_keys)
-        best_bid, best_ask = bids_keys[0] if bids_size > 0 else -1, asks_keys[0] if asks_size > 0 else -1
-        bids_sum, asks_sum = bids[best_bid] if best_bid != -1 else 0, asks[best_ask] if best_ask != -1 else 0
+        best_bid, best_ask = bids_keys[0] if bids_size > 0 else - \
+            1, asks_keys[0] if asks_size > 0 else -1
+        bids_sum, asks_sum = bids[best_bid] if best_bid != - \
+            1 else 0, asks[best_ask] if best_ask != -1 else 0
         for _ in range(1, levels_num):
             best_bid -= 1
             best_ask += 1
@@ -815,9 +835,11 @@ def on_new_order(mbo_order_book: typing.Dict[str, typing.Any], order_id: str, is
     orders = mbo_order_book["orders"]
 
     if order_id in orders:
-        raise ValueError("Order already has order:" + order_id + ". Should not you use on_replace_order?")
+        raise ValueError("Order already has order:" + order_id +
+                         ". Should not you use on_replace_order?")
     if size == 0:
-        raise ValueError("Size can't be zero, if use on_rewove_order function instead")
+        raise ValueError(
+            "Size can't be zero, if use on_rewove_order function instead")
 
     orders[order_id] = (is_bid, price, size)
     order_book = mbo_order_book["mbp_book"]
@@ -849,7 +871,8 @@ def on_replace_order(mbo_order_book: typing.Dict[str, typing.Any], order_id: str
     side_dicts = mbp_book["bids" if is_order_bid else "asks"]
     orders[order_id] = (is_order_bid, new_price, new_size)
     old_price_level_size = side_dicts[old_price] - old_size
-    new_price_level_size = (side_dicts[new_price] if new_price in side_dicts else 0) + new_size
+    new_price_level_size = (
+        side_dicts[new_price] if new_price in side_dicts else 0) + new_size
     on_depth(mbp_book, is_order_bid, old_price, old_price_level_size)
     on_depth(mbp_book, is_order_bid, new_price, new_price_level_size)
 
