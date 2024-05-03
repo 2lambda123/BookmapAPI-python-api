@@ -1,18 +1,18 @@
 import io
 import json
 import queue
+import select
+import socket
 import sys
 import threading
 import time
-import typing
-import socket
 import traceback
-import select
-
+import typing
 from os.path import exists
-from socket import socket, AF_INET, SOCK_STREAM
-from .sortedcontainers import SortedDict
+from socket import AF_INET, SOCK_STREAM, socket
+
 from .dto import OrderSendParameters
+from .sortedcontainers import SortedDict
 
 BUF_SIZE = 1024
 LOCAL_PROCESS = 0
