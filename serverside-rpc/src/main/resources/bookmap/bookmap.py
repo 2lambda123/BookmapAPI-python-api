@@ -9,7 +9,9 @@ import time
 import traceback
 import typing
 from os.path import exists
-from socket import AF_INET, SOCK_STREAM, socket
+from socket import AF_INET
+from socket import SOCK_STREAM
+from socket import socket
 
 from .dto import OrderSendParameters
 from .sortedcontainers import SortedDict
