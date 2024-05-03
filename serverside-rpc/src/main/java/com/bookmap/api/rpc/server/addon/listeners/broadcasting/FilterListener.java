@@ -17,6 +17,12 @@ public class FilterListener implements UpdateFilterListener {
     }
 
     @Override
+    /**
+     * Reacts to filter updates by updating the filter and performing necessary actions.
+     *
+     * @param o the object representing the updated filter
+     * @throws RuntimeException if the method "toFilter" is not found in the filter class
+     */
     public void reactToFilterUpdates(Object o) {
         System.out.println("Filter updated " + o);
         if (o != null) {
@@ -33,6 +39,13 @@ public class FilterListener implements UpdateFilterListener {
         }
     }
 
+    /**
+     * Filters the input event using the specified filter.
+     *
+     * @param event the input event to be filtered
+     * @return the filtered event, or the original event if no filter is specified or filtering is not required
+     * @throws RuntimeException if an error occurs during filtering
+     */
     public Object toFilter(Object event) {
         if (filter != null && doesRequireFiltering) {
             try {

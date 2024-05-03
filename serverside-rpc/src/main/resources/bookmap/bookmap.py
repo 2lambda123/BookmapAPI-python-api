@@ -237,6 +237,19 @@ def _request_data(addon, alias, req_id, event_type, params):
 
 
 def _get_parameters_from_msg(type_token: str, msg: str):
+    """    Get parameters from the message based on the type token.
+
+    Args:
+        type_token (str): The type of message.
+        msg (str): The message containing parameters.
+
+    Returns:
+        tuple: A tuple containing the parameters extracted from the message based on the type token.
+
+    Raises:
+        ValueError: If the type token is not recognized.
+    """
+
     tokens = msg.split(FIELD_SEPARATOR)
     if type_token == DEPTH:
         # alias, isBid, price in ticks, size in ticks
@@ -627,6 +640,21 @@ def resize_order(addon: typing.Dict[str, object],
 
 def subscribe_to_indicator(addon: typing.Dict[str, object], addon_name: str, generator_name: str = None,
                            does_require_filtering: bool = False) -> None:
+    """    Subscribe to an indicator for a given addon.
+
+    This function subscribes to an indicator for a given addon by pushing a message to the event queue.
+
+    Args:
+        addon (dict): A dictionary representing the addon.
+        addon_name (str): The name of the addon.
+        generator_name (str?): The name of the generator. Defaults to None.
+        does_require_filtering (bool?): Indicates if filtering is required. Defaults to False.
+
+
+    Raises:
+        Exception: If an error occurs during the subscription process.
+    """
+
     try:
         msg = FIELD_SEPARATOR.join(
             (REGISTER_BROADCASTING_PROVIDER,

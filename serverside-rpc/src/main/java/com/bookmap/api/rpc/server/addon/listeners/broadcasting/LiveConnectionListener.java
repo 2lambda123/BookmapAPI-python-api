@@ -22,6 +22,12 @@ public class LiveConnectionListener implements LiveConnectionStatusListener {
     }
 
     @Override
+    /**
+     * Reacts to changes in the status by updating the live connection status and performing various actions.
+     *
+     * @param status the new status to react to
+     * @throws SomeSpecificException if there is a specific condition that leads to an exception
+     */
     public void reactToStatusChanges(boolean status) {
         liveConnectionStatus = status;
         System.out.println("subscribed!!!!");

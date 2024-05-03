@@ -25,6 +25,13 @@ public class RpcProviderStatusListener implements ProviderStatusListener {
     }
 
     @Override
+    /**
+     * Updates the generators for a specific provider.
+     *
+     * @param providerName   the name of the provider
+     * @param generators     the list of GeneratorInfo objects to update
+     * @throws SomeException if there is an issue updating the provider status
+     */
     public void providerUpdateGenerators(String providerName, List<GeneratorInfo> generators) {
         System.out.println("providerUpdateGenerators " + generators);
         providerStatusService.updateProvider(providerName, generators);

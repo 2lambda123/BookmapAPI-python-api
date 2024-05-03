@@ -19,6 +19,14 @@ public class SubscribeToIndicatorHandler implements Handler<SubscribeToIndicator
     }
 
     @Override
+    /**
+     * Handles the SubscribeToIndicatorEvent by connecting to the provider and subscribing to live data.
+     * If the event alias is null, it connects to the provider and subscribes to live data. If the event alias is not null,
+     * it checks if already connected to the provider, and if not, connects to the provider and subscribes to live data.
+     *
+     * @param event the SubscribeToIndicatorEvent to handle
+     * @throws RuntimeException if there is an exception during subscribing to live data
+     */
     public void handle(SubscribeToIndicatorEvent event) {
         if (event.alias == null) {
             RpcLogger.info("Generator name is null, connecting to provider " + event.addonName);
