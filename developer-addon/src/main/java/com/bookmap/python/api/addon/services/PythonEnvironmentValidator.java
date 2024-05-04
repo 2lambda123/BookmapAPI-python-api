@@ -1,5 +1,6 @@
 package com.bookmap.python.api.addon.services;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.concurrent.Future;
@@ -18,13 +19,13 @@ public class PythonEnvironmentValidator implements BuildValidator<String> {
             String versionLine = null;
             // python2 sends info about version to stderr, just tested it with local version
             try (var stream = new BufferedReader(new InputStreamReader(versionCheck.getErrorStream()))) {
-                versionLine = stream.readLine();
+                versionLine = BoundedLineReader.readLine(stream, 5_000_000);
             }
 
             // if this is python3, it sends version to stdin
             if (versionLine == null) {
                 try (var stream = new BufferedReader(new InputStreamReader(versionCheck.getInputStream()))) {
-                    versionLine = stream.readLine();
+                    versionLine = BoundedLineReader.readLine(stream, 5_000_000);
                 }
             }
 

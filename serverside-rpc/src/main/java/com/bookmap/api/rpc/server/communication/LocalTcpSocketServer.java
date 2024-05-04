@@ -3,6 +3,7 @@ package com.bookmap.api.rpc.server.communication;
 import com.bookmap.api.rpc.server.exceptions.FailedToStartServerException;
 import com.bookmap.api.rpc.server.exceptions.FatalServerException;
 import com.bookmap.api.rpc.server.log.RpcLogger;
+import io.github.pixee.security.BoundedLineReader;
 import velox.api.layer1.common.Log;
 
 import java.io.*;
@@ -28,7 +29,7 @@ public class LocalTcpSocketServer implements Server {
 	@Override
 	public String receive() {
 		try {
-			String msg = clientReader.readLine();
+			String msg = BoundedLineReader.readLine(clientReader, 5_000_000);
 			RpcLogger.debug("Received msg: " + msg);
 			return msg;
 		} catch (IOException e) {

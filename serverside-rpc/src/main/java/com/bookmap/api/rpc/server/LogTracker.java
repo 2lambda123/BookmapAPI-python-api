@@ -2,6 +2,7 @@ package com.bookmap.api.rpc.server;
 
 import com.bookmap.api.rpc.server.log.PythonLogger;
 import com.bookmap.api.rpc.server.log.PythonStackTraceTracker;
+import io.github.pixee.security.BoundedLineReader;
 import velox.api.layer1.common.Log;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,7 +25,7 @@ public class LogTracker {
 			PythonStackTraceTracker traceTracker = PythonStackTraceTracker.getTracker();
 			try (var reader = new BufferedReader(new InputStreamReader(inputStream))) {
 				String bufferLine;
-				while ((bufferLine = reader.readLine()) != null) {
+				while ((bufferLine = BoundedLineReader.readLine(reader, 5_000_000)) != null) {
 					switch (logLevel) {
 						case INFO -> PythonLogger.info(bufferLine);
 						case WARN -> PythonLogger.warn(bufferLine);

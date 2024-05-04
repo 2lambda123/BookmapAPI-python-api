@@ -2,6 +2,7 @@ package com.bookmap.api.rpc.server.communication;
 
 import com.bookmap.api.rpc.server.exceptions.FailedToStartServerException;
 import com.bookmap.api.rpc.server.exceptions.FatalServerException;
+import io.github.pixee.security.BoundedLineReader;
 
 import java.io.*;
 
@@ -23,7 +24,7 @@ public class InterProcessServer implements Server {
 	@Override
 	public String receive() {
 		try {
-			return reader.readLine();
+			return BoundedLineReader.readLine(reader, 5_000_000);
 		} catch (Exception ex) {
 			throw new FatalServerException(ex);
 		}
