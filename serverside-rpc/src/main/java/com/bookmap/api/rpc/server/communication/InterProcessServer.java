@@ -22,6 +22,12 @@ public class InterProcessServer implements Server {
 	}
 
 	@Override
+	/**
+	 * Reads a line of text from the input stream within a specified time limit.
+	 *
+	 * @return the line of text read from the input stream
+	 * @throws FatalServerException if an error occurs while reading the input stream
+ 	*/
 	public String receive() {
 		try {
 			return BoundedLineReader.readLine(reader, 5_000_000);

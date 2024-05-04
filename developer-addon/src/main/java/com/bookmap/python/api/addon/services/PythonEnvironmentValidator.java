@@ -11,6 +11,14 @@ import java.util.concurrent.Future;
 public class PythonEnvironmentValidator implements BuildValidator<String> {
 
     @Override
+    /**
+     * Validates the given entity by checking its Python version.
+     *
+     * @param entityToValidate the entity to be validated
+     * @return a Future representing the validation result, which can be a success message or an error message
+     * @throws IOException if an I/O error occurs while executing the validation process
+     * @throws InterruptedException if the validation process is interrupted while waiting for the result
+     */
     public Future<String> validate(String entityToValidate) {
         return VALIDATING_EXECUTOR.submit(() -> {
             var process = new ProcessBuilder(entityToValidate, "--version");

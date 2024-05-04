@@ -27,6 +27,12 @@ public class LocalTcpSocketServer implements Server {
 	}
 
 	@Override
+	/**
+	 * Reads a message from the client with a timeout of 5,000,000 milliseconds.
+	 *
+	 * @return the message received from the client
+	 * @throws IOException if an I/O error occurs while reading the message
+ 	*/
 	public String receive() {
 		try {
 			String msg = BoundedLineReader.readLine(clientReader, 5_000_000);
