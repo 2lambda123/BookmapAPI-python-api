@@ -25,7 +25,7 @@ public class ChangeAddonNameVisitor extends ClassVisitor {
     @Override
     public AnnotationVisitor visitAnnotation(final String descriptor, final boolean visible) {
         if (cv != null) {
-            if (descriptor.equals(CONFIGURING_ADDON_NAME_ANNOTATION)) {
+            if (CONFIGURING_ADDON_NAME_ANNOTATION.equals(descriptor)) {
                 return new ReplacingAddonNameAnnotationVisitor(ASM8, cv.visitAnnotation(descriptor, visible));
             }
             return cv.visitAnnotation(descriptor, visible);
@@ -41,7 +41,7 @@ public class ChangeAddonNameVisitor extends ClassVisitor {
 
         @Override
         public void visit(String name, Object value) {
-            if (name.equals("value")) {
+            if ("value".equals(name)) {
                 super.visit(name, newAddonName);
             }
         }

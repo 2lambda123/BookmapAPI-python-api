@@ -24,6 +24,6 @@ public class MoveOrderConverter implements EventConverter<String, MoveOrderEvent
     }
 
     private double getDoubleValue(String token) {
-        return token.equals("nan") ? Double.NaN : Double.parseDouble(token);
+        return "nan".equals(token) ? Double.NaN : Double.parseDouble(token);
     }
 }

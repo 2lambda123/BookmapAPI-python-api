@@ -30,7 +30,7 @@ public class RemoveTradingAnnotationVisitor extends ClassVisitor {
     @Override
     public AnnotationVisitor visitAnnotation(final String descriptor, final boolean visible) {
         if (cv != null) {
-            if (descriptor.equals(TRADING_STRATEGY_ANNOTATION) && !isTradingStrategy) {
+            if (TRADING_STRATEGY_ANNOTATION.equals(descriptor) && !isTradingStrategy) {
                 return null;
             }
             return cv.visitAnnotation(descriptor, visible);
